@@ -1,4 +1,4 @@
-var LocalStrategy   = require('passport-local').Strategy;
+var LocalStrategy = require('passport-local').Strategy;
 var User = require('../models/user');
 var bCrypt = require('bcrypt-nodejs');
 
@@ -31,12 +31,12 @@ module.exports = function (passport) {
             newUser.lastName = req.param('lastName');
 
             // save the user
-            newUser.save(function(err) {
-              if (err){
-                console.log('Error in Saving user: '+err);
-                throw err;
+            newUser.save(function(saveErr) {
+              if (saveErr) {
+                // console.log('Error in Saving user: '+err);
+                throw saveErr;
               }
-              console.log('User Registration succesful');
+              // console.log('User Registration succesful');
               return done(null, newUser);
             });
           }
@@ -48,4 +48,10 @@ module.exports = function (passport) {
       process.nextTick(findOrCreateUser);
     })
   );
+
+  // Generates hash using bCrypt
+  var createHash = function(password) {
+    return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);
+  };
+
 };
