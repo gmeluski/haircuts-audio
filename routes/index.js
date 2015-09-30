@@ -1,6 +1,15 @@
 var express = require('express');
 var router = express.Router();
 
+// As with any middleware it is quintessential to call next()
+// if the user is authenticated
+var isAuthenticated = function (req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/');
+};
+
 module.exports = function(passport) {
 
   /* GET login page. */
@@ -39,14 +48,6 @@ module.exports = function(passport) {
     res.render('home', {user: req.user});
   });
 
-  // As with any middleware it is quintessential to call next()
-  // if the user is authenticated
-  var isAuthenticated = function (req, res, next) {
-    if (req.isAuthenticated()) {
-      return next();
-    }
-    res.redirect('/');
-  };
 
   return router;
 };
