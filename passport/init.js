@@ -1,4 +1,6 @@
-var User = ('../models/user');
+var User = require('../models/user');
+var signup = require('./signup');
+var login = require('./login');
 
 module.exports = function (passport) {
   passport.serializeUser(function(user, done) {
@@ -10,4 +12,7 @@ module.exports = function (passport) {
       done(err, user);
     });
   });
+
+  login(passport);
+  signup(passport);
 };
