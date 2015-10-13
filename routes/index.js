@@ -45,6 +45,9 @@ module.exports = function(passport){
 		res.render('home', { user: req.user });
 	});
 
+  router.get('/audio/*', isAuthenticated, function (req, res, next) {
+    next()
+  })
 	/* Handle Logout */
 	router.get('/signout', function(req, res) {
 		req.logout();
