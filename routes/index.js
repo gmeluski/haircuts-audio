@@ -40,6 +40,11 @@ module.exports = function(passport){
 		failureFlash : true
 	}));
 
+  router.get('/player', isAuthenticated, function (req, res) {
+    res.render('player')
+
+  });
+
 	/* GET Home Page */
 	router.get('/home', isAuthenticated, function(req, res){
 		res.render('home', { user: req.user });
